@@ -28,6 +28,7 @@
         <select id="categoryFilter">
           <option value="" disabled selected>Choose a Category</option>
           <option value="cleanser">Cleansers</option>
+          <option value="skincare">Skincare</option>
           <option value="moisturizer">Moisturizers & Treatments</option>
           <option value="haircare">Haircare</option>
           <option value="makeup">Makeup</option>
@@ -48,6 +49,19 @@
         <div id="selectedProductsList"></div>
         <button id="generateRoutine" class="generate-btn">
           <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Routine
+        </button>
+        <!-- clear all selections -->
+        <button
+          id="clearSelections"
+          class="generate-btn"
+          style="
+            margin-top: 10px;
+            background: #fff;
+            color: var(--loreal-red);
+            border: 2px solid var(--loreal-red);
+          "
+        >
+          Clear Selections
         </button>
       </div>
 
@@ -85,7 +99,9 @@
       </footer>
     </div>
 
-    <!-- secrets.js can be removed when using Cloudflare Workers for API requests -->
+    <!-- secrets.js can be removed when using Cloudflare Workers for API requests
+         Create secrets.js in this project root with:
+         const OPENAI_WORKER_URL = 'https://your-worker.example.com'; -->
     <script src="secrets.js"></script>
     <script src="script.js"></script>
   </body>

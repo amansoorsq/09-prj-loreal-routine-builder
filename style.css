@@ -18,11 +18,48 @@ body {
   max-width: 900px;
 }
 
+/* —— selection visuals & brand accents —— */
+:root {
+  --loreal-red: #ff003b;
+  --loreal-gold: #e3a535;
+  --muted: #666;
+}
+
+/* subtle hover + selected state for product cards */
+.product-card {
+  transition: transform 150ms ease, box-shadow 150ms ease,
+    border-color 150ms ease;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* visual marker when a product is selected */
+.product-card.selected {
+  border-color: var(--loreal-red);
+  box-shadow: 0 14px 30px rgba(255, 0, 59, 0.1);
+  transform: translateY(-6px);
+}
+
+/* small "Selected" badge shown inside selected cards */
+.product-card .badge {
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--loreal-red);
+  padding: 6px 8px;
+  border-radius: 999px;
+  align-self: flex-start;
+  margin-right: 6px;
+}
+
 /* header */
 .site-header {
   text-align: center;
-  padding-top: 50px;
+  padding-top: 48px;
   padding-bottom: 10px;
+  border-bottom: 4px solid rgba(0, 0, 0, 0.06);
 }
 
 .logo {
@@ -32,11 +69,13 @@ body {
 
 .site-title {
   font-size: 22px;
-  font-weight: 500;
+  font-weight: 700;
   margin-bottom: 10px;
+  color: var(--loreal-red);
+  letter-spacing: 0.2px;
 }
 
-/* category filter */
+/* category filter - accent border and subtle shadow */
 .search-section {
   margin: 30px 0;
   display: flex;
@@ -44,13 +83,14 @@ body {
 
 .search-section select {
   width: 100%;
-  padding: 16px;
+  padding: 14px 18px;
   font-size: 18px;
-  border: 2px solid #000;
-  border-radius: 8px;
+  border: 2px solid var(--loreal-red);
+  border-radius: 10px;
   cursor: pointer;
   background-color: white;
-  font-weight: 500;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(255, 0, 59, 0.04);
 }
 
 .search-section select:focus {
@@ -60,25 +100,29 @@ body {
 
 /* chat section */
 .chatbox {
-  margin: 40px 0;
-  border: 2px solid #000;
-  border-radius: 8px;
+  margin: 34px 0;
+  border: 2px solid var(--loreal-red);
+  border-radius: 10px;
   padding: 26px;
+  background: linear-gradient(180deg, #fff 0%, #fff9f9 100%);
 }
 
 .chatbox h2 {
   font-size: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
+  color: #222;
 }
 
 .chat-window {
-  padding: 20px;
+  padding: 18px;
   font-size: 18px;
   line-height: 1.5;
-  height: 250px;
+  height: 260px;
   overflow-y: auto;
-  background: #fafafa;
-  margin-bottom: 20px;
+  background: #fff;
+  margin-bottom: 18px;
+  border-radius: 6px;
+  border: 1px solid #efeaea;
 }
 
 /* placeholder message */
@@ -113,17 +157,18 @@ body {
 
 .chat-form button {
   font-size: 18px;
-  background: #000;
+  background: var(--loreal-red);
   color: #fff;
   border: none;
   padding: 12px;
-  width: 48px;
+  width: 56px;
   height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.3s;
+  border-radius: 8px;
+  box-shadow: 0 6px 14px rgba(255, 0, 59, 0.12);
 }
 
 .chat-form button:hover {
@@ -170,55 +215,72 @@ body {
   color: #666666;
 }
 
-/* products grid */
+/* products grid: use CSS Grid for compact multi-column layout */
 .products-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
   margin: 30px 0;
 }
 
+/* product card: vertical layout, centered content for grid items */
 .product-card {
-  flex: 0 1 calc(33.333% - 14px);
-  border: 1px solid #ccc;
-  padding: 15px;
-  border-radius: 4px;
   display: flex;
-  gap: 15px;
-  min-height: 160px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 12px;
+  min-height: auto;
+  height: auto;
 }
 
 .product-card img {
-  width: 110px;
-  height: 110px;
+  width: 100%;
+  max-width: 140px;
+  height: auto;
   object-fit: contain;
-  flex-shrink: 0;
+  margin-bottom: 6px;
 }
 
+/* adjust badge placement for centered layout */
+.product-card .badge {
+  position: static;
+  margin-bottom: 6px;
+}
+
+/* product-info becomes a centered column */
 .product-card .product-info {
-  flex: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
-  min-height: 110px;
 }
 
-.product-card h3 {
-  font-size: 16px;
-  margin-bottom: 8px;
+/* responsive tweaks: slightly smaller minimum column on narrow screens */
+@media (max-width: 760px) {
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
 }
 
-.product-card p {
-  font-size: 14px;
-  color: #666;
+@media (max-width: 420px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* selected products */
 .selected-products {
-  margin: 40px 0;
+  margin: 36px 0;
   padding: 20px;
-  border: 2px solid #000;
-  border-radius: 8px;
+  border: 2px solid var(--loreal-gold);
+  border-radius: 10px;
+  background: linear-gradient(
+    180deg,
+    rgba(227, 165, 53, 0.04),
+    rgba(255, 255, 255, 0)
+  );
 }
 
 .selected-products h2 {
@@ -229,27 +291,42 @@ body {
 #selectedProductsList {
   display: flex;
   flex-wrap: wrap;
+  gap: 8px;
+}
+
+.selected-chip {
+  background: #fff;
+  border: 1px solid #e6e1e1;
+  padding: 8px 10px;
+  border-radius: 999px;
+  display: inline-flex;
   gap: 10px;
+  align-items: center;
+  font-weight: 600;
 }
-
-.generate-btn {
-  width: 100%;
-  margin-top: 20px;
-  padding: 16px;
-  font-size: 18px;
-  font-weight: 500;
-  color: #fff;
-  background: #000;
+.selected-chip button {
   border: none;
-  border-radius: 8px;
+  background: transparent;
+  color: var(--loreal-red);
   cursor: pointer;
-  transition: background 0.3s;
 }
 
-.generate-btn:hover {
-  background: #666;
+/* generate button emphasis */
+.generate-btn {
+  background: linear-gradient(90deg, var(--loreal-red), var(--loreal-gold));
+  color: #fff;
+  border-radius: 8px;
 }
 
-.generate-btn i {
-  margin-right: 8px;
+/* small responsive fixes */
+@media (max-width: 760px) {
+  .product-card {
+    flex: 0 1 calc(50% - 14px);
+  }
+}
+
+@media (max-width: 420px) {
+  .product-card {
+    flex: 0 1 100%;
+  }
 }
